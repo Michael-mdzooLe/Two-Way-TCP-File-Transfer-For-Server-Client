@@ -92,3 +92,15 @@ def start_client_gui():
     send_button = ttk.Button(window, text="Upload File", command=lambda: send_file(ip_entry.get(), 5001, file_label.cget("text"), log_box))
     send_button.pack(pady=5)
 
+    tk.Label(window, text="Filename to download:").pack()
+    filename_entry = tk.Entry(window)
+    filename_entry.pack()
+
+    download_button = ttk.Button(window, text="Download File", command=lambda: download_file(ip_entry.get(), 5001, filename_entry.get(), log_box))
+    download_button.pack(pady=5)
+
+    log_box = tk.Listbox(window, width=80, height=10)
+    log_box.pack(pady=10)
+
+    window.mainloop()
+
