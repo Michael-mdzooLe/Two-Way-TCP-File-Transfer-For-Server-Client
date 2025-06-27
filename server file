@@ -76,4 +76,7 @@ def start_server_gui():
     window.title("TCP File Server")
     window.geometry("550x350")
 
+    log_box = tk.Listbox(window, width=80, height=15)
+    log_box.pack(pady=10)
+
 
