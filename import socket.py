@@ -11,4 +11,5 @@ def send_file(server_ip, port, filepath, log_box):
         messagebox.showerror("Error", "No file selected.")
         return
 
-  
+    filesize = os.path.getsize(filepath)
+    client_socket = socket.socket()
