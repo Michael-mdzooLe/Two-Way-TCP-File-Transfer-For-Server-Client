@@ -104,3 +104,5 @@ def start_client_gui():
 
     window.mainloop()
 
+if __name__ == "__main__":
+    start_client_gui()
