@@ -84,4 +84,5 @@ def start_server_gui():
 
     window.mainloop()
 
-
+if __name__ == "__main__":
+    start_server_gui()
