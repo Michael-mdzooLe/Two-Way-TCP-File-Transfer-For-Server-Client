@@ -33,3 +33,21 @@ def send_file(server_ip, port, filepath, log_box):
     finally:
         client_socket.close()
 
+def download_file(server_ip, port, filename, log_box):
+    if not filename.strip():
+        messagebox.showerror("Error", "Please enter a file name to download.")
+        return
+
+    client_socket = socket.socket()
+    try:
+        client_socket.connect((server_ip, port))
+        client_socket.send("DOWNLOAD".encode())
+        client_socket.recv(BUFFER_SIZE)  # Wait for ACK
+        client_socket.send(filename.encode())
+
+        response = client_socket.recv(BUFFER_SIZE).decode()
+        if response.startswith("NOTFOUND"):
+            log_box.insert(tk.END, f"[✗] File not found: {filename}")
+            client_socket.close()
+            return
+
