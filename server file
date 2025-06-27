@@ -60,4 +60,15 @@ def handle_client(client_socket, address, log_box):
     finally:
         client_socket.close()
 
+def start_server(log_box):
+    server_socket = socket.socket()
+    server_socket.bind((SERVER_HOST, SERVER_PORT))
+    server_socket.listen(5)
+    log_box.insert(tk.END, f"[*] Server started at {SERVER_HOST}:{SERVER_PORT}")
+    while True:
+        client_socket, address = server_socket.accept()
+        thread = threading.Thread(target=handle_client, args=(client_socket, address, log_box))
+        thread.daemon = True
+        thread.start()
+
 
