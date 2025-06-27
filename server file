@@ -22,4 +22,15 @@ def handle_client(client_socket, address, log_box):
             filesize = int(filesize)
             log_box.insert(tk.END, f"Receiving file: {filename} ({filesize} bytes)")
 
+            with open(f"received_{filename}", "wb") as f:
+                total = 0
+                while total < filesize:
+                    bytes_read = client_socket.recv(BUFFER_SIZE)
+                    if not bytes_read:
+                        break
+                    f.write(bytes_read)
+                    total += len(bytes_read)
+
+            log_box.insert(tk.END, f"[✓] File received: {filename} ({total} bytes)")
+
 
