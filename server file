@@ -15,3 +15,11 @@ def handle_client(client_socket, address, log_box):
         command = client_socket.recv(BUFFER_SIZE).decode().strip()
         client_socket.send("ACK".encode())  # Confirm receipt of command
 
+        if command == "UPLOAD":
+            received = client_socket.recv(BUFFER_SIZE).decode()
+            filename, filesize = received.split(SEPARATOR)
+            filename = os.path.basename(filename)
+            filesize = int(filesize)
+            log_box.insert(tk.END, f"Receiving file: {filename} ({filesize} bytes)")
+
+
