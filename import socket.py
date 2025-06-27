@@ -19,3 +19,13 @@ def send_file(server_ip, port, filepath, log_box):
         client_socket.recv(BUFFER_SIZE)  # Wait for ACK
 
         client_socket.send(f"{os.path.basename(filepath)}{SEPARATOR}{filesize}".encode())
+
+        with open(filepath, "rb") as f:
+            while True:
+                bytes_read = f.read(BUFFER_SIZE)
+                if not bytes_read:
+                    break
+                client_socket.sendall(bytes_read)
+
+        log_box.insert(tk.END, f"[✓] File uploaded: {os.path.basename(filepath)}")
+    
