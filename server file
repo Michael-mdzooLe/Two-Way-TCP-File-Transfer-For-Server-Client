@@ -79,4 +79,9 @@ def start_server_gui():
     log_box = tk.Listbox(window, width=80, height=15)
     log_box.pack(pady=10)
 
+    start_button = ttk.Button(window, text="Start Server", command=lambda: threading.Thread(target=start_server, args=(log_box,), daemon=True).start())
+    start_button.pack()
+
+    window.mainloop()
+
 
