@@ -71,4 +71,9 @@ def start_server(log_box):
         thread.daemon = True
         thread.start()
 
+def start_server_gui():
+    window = tk.Tk()
+    window.title("TCP File Server")
+    window.geometry("550x350")
+
 
