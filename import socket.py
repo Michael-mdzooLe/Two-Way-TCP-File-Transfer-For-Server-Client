@@ -13,3 +13,9 @@ def send_file(server_ip, port, filepath, log_box):
 
     filesize = os.path.getsize(filepath)
     client_socket = socket.socket()
+    try:
+        client_socket.connect((server_ip, port))
+        client_socket.send("UPLOAD".encode())
+        client_socket.recv(BUFFER_SIZE)  # Wait for ACK
+
+        client_socket.send(f"{os.path.basename(filepath)}{SEPARATOR}{filesize}".encode())
