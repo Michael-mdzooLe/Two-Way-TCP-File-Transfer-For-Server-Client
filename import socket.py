@@ -51,3 +51,21 @@ def download_file(server_ip, port, filename, log_box):
             client_socket.close()
             return
 
+        fname, fsize = response.split(SEPARATOR)
+        fsize = int(fsize)
+
+        with open(f"downloaded_{fname}", "wb") as f:
+            total = 0
+            while total < fsize:
+                bytes_read = client_socket.recv(BUFFER_SIZE)
+                if not bytes_read:
+                    break
+                f.write(bytes_read)
+                total += len(bytes_read)
+
+        log_box.insert(tk.END, f"[✓] Downloaded: downloaded_{fname}")
+    except Exception as e:
+        messagebox.showerror("Download Error", str(e))
+    finally:
+        client_socket.close()
+
