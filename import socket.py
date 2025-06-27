@@ -69,3 +69,26 @@ def download_file(server_ip, port, filename, log_box):
     finally:
         client_socket.close()
 
+def browse_file(file_label):
+    filepath = filedialog.askopenfilename()
+    file_label.config(text=filepath)
+
+def start_client_gui():
+    window = tk.Tk()
+    window.title("TCP File Client")
+    window.geometry("550x400")
+
+    tk.Label(window, text="Server IP:").pack()
+    ip_entry = tk.Entry(window)
+    ip_entry.insert(0, "127.0.0.1")
+    ip_entry.pack()
+
+    file_label = tk.Label(window, text="No file selected")
+    file_label.pack()
+
+    browse_button = ttk.Button(window, text="Browse File", command=lambda: browse_file(file_label))
+    browse_button.pack(pady=5)
+
+    send_button = ttk.Button(window, text="Upload File", command=lambda: send_file(ip_entry.get(), 5001, file_label.cget("text"), log_box))
+    send_button.pack(pady=5)
+
