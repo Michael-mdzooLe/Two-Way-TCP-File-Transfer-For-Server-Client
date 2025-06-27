@@ -53,4 +53,11 @@ def handle_client(client_socket, address, log_box):
 
             log_box.insert(tk.END, f"[✓] File sent: {filename} ({filesize} bytes)")
 
+        else:
+            log_box.insert(tk.END, f"[✗] Unknown command from {address}: {command}")
+    except Exception as e:
+        log_box.insert(tk.END, f"[✗] Error: {e}")
+    finally:
+        client_socket.close()
+
 
