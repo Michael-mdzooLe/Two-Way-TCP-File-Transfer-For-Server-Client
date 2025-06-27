@@ -28,4 +28,8 @@ def send_file(server_ip, port, filepath, log_box):
                 client_socket.sendall(bytes_read)
 
         log_box.insert(tk.END, f"[✓] File uploaded: {os.path.basename(filepath)}")
-    
+    except Exception as e:
+        messagebox.showerror("Upload Error", str(e))
+    finally:
+        client_socket.close()
+
