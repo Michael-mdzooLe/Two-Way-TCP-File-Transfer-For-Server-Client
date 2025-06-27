@@ -33,4 +33,11 @@ def handle_client(client_socket, address, log_box):
 
             log_box.insert(tk.END, f"[✓] File received: {filename} ({total} bytes)")
 
+        elif command == "DOWNLOAD":
+            filename = client_socket.recv(BUFFER_SIZE).decode()
+            if not os.path.exists(f"received_{filename}"):
+                client_socket.send("NOTFOUND".encode())
+                log_box.insert(tk.END, f"[✗] Download request failed: {filename} not found")
+                return
+
 
