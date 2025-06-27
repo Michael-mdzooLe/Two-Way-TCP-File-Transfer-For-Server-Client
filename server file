@@ -40,4 +40,17 @@ def handle_client(client_socket, address, log_box):
                 log_box.insert(tk.END, f"[✗] Download request failed: {filename} not found")
                 return
 
+            filepath = f"received_{filename}"
+            filesize = os.path.getsize(filepath)
+            client_socket.send(f"{filename}{SEPARATOR}{filesize}".encode())
+
+            with open(filepath, "rb") as f:
+                while True:
+                    bytes_read = f.read(BUFFER_SIZE)
+                    if not bytes_read:
+                        break
+                    client_socket.sendall(bytes_read)
+
+            log_box.insert(tk.END, f"[✓] File sent: {filename} ({filesize} bytes)")
+
 
